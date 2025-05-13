@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>大字滚动展示</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      height: 300vh;
+      background: #f0f0f0;
+    }
+
+    .placeholder {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ccc;
+      font-size: 24px;
+    }
+
+    .big-img {
+      height: 100vh;
+      background: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 0 20px;
+    }
+
+    .text-container {
+      width: 80%;
+      overflow: hidden;         /* 超出隐藏 */
+      white-space: nowrap;      /* 不换行 */
+    }
+
+    .text-container h1 {
+      font-size: 100px;          /* 更大字体 */
+      white-space: nowrap;
+      margin: 20px 0;
+      transition: transform 0.1s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="placeholder">向下滚动查看文字左右滑动</div>
+
+  <div class="big-img" id="bigImg">
+    <div class="text-container">
+      <h1 id="lin21">ADVENTURES OF A LIFETIME ADVENTURES OF A LIFETIME ADVENTURES OF A LIFETIME</h1>
+    </div>
+    <div class="text-container">
+      <h1 id="line2">ADVENTURES OF A LIFETIME ADVENTURES OF A LIFETIME ADVENTURES OF A LIFETIME</h1>
+    </div>
+  </div>
+
+  <script>
+    const box = document.getElementById('bigImg');
+    const h1Top = document.getElementById('lin21');
+    const h1Bottom = document.getElementById('line2');
+
+    window.addEventListener('scroll', () => {
+      const rect = box.getBoundingClientRect();
+      const winH = window.innerHeight;
+
+      if (rect.top < winH && rect.bottom > 0) {
+        const ratio = 1 - Math.abs(rect.top / winH);
+        const offset = ratio * 400; // 控制偏移范围
+
+        h1Top.style.transform = `translateX(${-offset}px)`;
+        h1Bottom.style.transform = `translateX(${offset}px)`;
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- 
+const box = document.getElementById('bigImg');
+选中页面中你放文字的容器 .big-img。
+
+后续我们判断这个盒子是否在视口内。
+
+const h1Top = document.getElementById('lin21');
+const h1Bottom = document.getElementById('line2');
+分别选中你两个 <h1> 元素，后面我们会控制它们左右滑动。
+
+window.addEventListener('scroll', () => { ... });
+当用户滚动页面时，触发以下函数。
+
+const rect = box.getBoundingClientRect();
+获取 .big-img 相对于当前视口的位置和尺寸，例如：
+
+rect.top: 元素顶部距离视口顶部的像素；
+
+rect.bottom: 元素底部距离视口顶部的像素。
+
+const winH = window.innerHeight;
+获取当前浏览器窗口高度，用于判断元素是否出现在视口中。
+
+if (rect.top < winH && rect.bottom > 0) { ... }
+判断 .big-img 是否在视口中：
+
+只要盒子的顶部进入视口（rect.top < winH）；
+
+且底部还没滚出视口顶部（rect.bottom > 0）；
+
+那么我们就开始处理文字的滑动效果。
+
+const ratio = 1 - Math.abs(rect.top / winH);
+计算滑动的强度比例 ratio，范围大概是从 0（刚进入视口）到 1（完全在中间）。
+
+滚得越深入，比例越大，文字移动得越远。
+
+const offset = ratio * 300;
+根据比例乘以最大偏移距离 300px，表示当前滚动到这个位置，文字该滑动多远。
+
+h1Top.style.transform = translateX(${-offset}px);
+h1Bottom.style.transform = translateX(${offset}px);
+实际执行文字滑动效果：
+
+第一行往左滑（负方向）；
+
+第二行往右滑（正方向）；
+
+形成 反向滑动 的视觉效果。
+
+
+-->
