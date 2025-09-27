@@ -242,7 +242,7 @@
 }
 .home .big-img {
   height: 90vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://cdn.prod.website-files.com/671746351f3baab437ce6ff4/671746351f3baab437ce70bf_Islands%20tour%20cover.avif);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(imgs/06.png);
   color: white;
   display: flex;
   flex-direction: column;
